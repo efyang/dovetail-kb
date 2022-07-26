@@ -1,0 +1,470 @@
+units:
+  trrs_half: 2.25
+  conn_rot: atan2((-cx/2 - 2), -(cy/2 + cy+3.5) - -cy/4)
+
+points:
+  key:
+    padding: cy
+    footprints:
+      choc_hotswap:
+        type: choc
+        nets:
+          from: =colrow
+          to: =column_net
+        params:
+          keycaps: true
+          hotswap: true
+      diode:
+        type: diode
+        nets:
+          from: =colrow
+          to: =row_net
+        anchor:
+          rotate: 180
+          shift: [0, -4.7]
+
+  zones:
+    main:
+      rows:
+        bottom:
+          row_net: R3
+          mirror:
+            row_net: R3_left
+        home:
+          row_net: R2
+          mirror:
+            row_net: R2_left
+        top:
+          row_net: R1
+          mirror:
+            row_net: R1_left
+      columns:
+        far:
+          spread: cx
+          key:
+            column_net: C1
+        index:
+          spread: cx
+          key:
+            column_net: C2
+        middle:
+          spread: cx
+          stagger: 18
+          key:
+            column_net: C3
+        ring:
+          key:
+            column_net: C4
+          stagger: -5
+          spread: 23
+          origin: [0, cy]
+          rows:
+            bottom:
+              shift: [cx-23, 0]
+            top:
+              shift: [23-cx, 0]
+        pinkie:
+          key:
+            column_net: C5
+          spread: 15
+          stagger: -19
+          origin: [0, cy]
+          rows:
+            bottom:
+              shift: [-10, 0]
+            top:
+              shift: [10, 0]
+    thumb:
+      anchor:
+        orient: 90
+        shift: [-65, -90]
+      rows:
+        r1:
+          padding: cx
+          row_net: R4
+          mirror:
+            row_net: R4_left
+        r2:
+          asym: right
+          padding: cx
+          row_net: R5
+          mirror:
+            row_net: R5_left
+      columns:
+        c1:
+          spread: cy+1.6
+          key:
+            column_net: C1
+            origin: [0, 0]
+            rotate: 90
+        c2:
+          spread: cy+1.6
+          key:
+            column_net: C2
+            origin: [0, 0]
+            rotate: -90
+  mirror:
+    distance: 5
+
+outlines:
+  exports:
+    raw:
+      - type: keys
+        side: both
+        size: [1cx , 1cy]
+    keycap_outlines:
+      - type: keys
+        side: both
+        size: [1cx - 0.5, 1cy - 0.5] # Choc keycaps are 17.5 x 16.5
+        bound: false
+    cutout_polies:
+      - type: polygon
+        mirror: true
+        points:
+          - ref: main_far_top
+            shift: [-cx/2 - 2, cy/2+1]
+          - ref: main_far_bottom
+            shift: [-cx/2 - 2, 0]
+          - ref: main_far_bottom
+            shift: [-cx/2 - 2, -cy/4]
+          - ref: main_far_bottom
+            shift: [0, -(cy/2 + cy+3.5)]
+          - ref: main_far_bottom
+            shift: [cx, -(cy/2 + cy+3.5)]
+          - ref: main_middle_bottom
+            shift: [0, -cy/2 - 15]
+          - ref: main_pinkie_bottom
+            shift: [-0.5cx, -0.5cx]
+          - ref: main_pinkie_bottom
+            shift: [0.5cx, -0.5cx]
+          - ref: main_pinkie_top
+            shift: [0.5cx, -0.5cx]
+          - ref: main_pinkie_top
+            shift: [0.5cx+1, 0.5cx]
+          - ref: main_pinkie_top
+            shift: [-cx/4+1, 0.75cx]
+          - ref: main_ring_top
+            shift: [0.5cx, 0.5cx]
+          - ref: main_middle_top
+            shift: [0.5cx, 0.5cx+0.5]
+      - type: rectangle
+        mirror: true
+        size: [56, cy+1]
+        anchor:
+          ref: main_middle_top
+          shift: [-cx/2 - 36 - 2,-0.5cy]
+      - type: circle
+        radius: 40/2
+        anchor:
+          orient: -90
+          ref: thumb_c1_r1
+          shift: [cy/2+1.6/2, 40/2 + cy/2]
+      - type: rectangle
+        size: [40, 40]
+        anchor:
+          ref: mirror_thumb_c1_r1
+          orient: -90
+          shift: [cy/2+2.2/2+20, -40/2+cx/2]
+      - type: rectangle
+        size: [40, 25]
+        corner: 10
+        anchor:
+          ref: thumb_c1_r1
+          orient: -90
+          shift: [-cy/2-2.2, -40/2+cy/2-1]
+    cutout_all:
+      - type: outline
+        name: cutout_polies
+      - type: outline
+        name: keycap_outlines
+    cutout_final:
+      - type: outline
+        name: cutout_all
+        fillet: 10
+      #- operation: subtract
+        #type: rectangle
+        #mirror: true
+        #corner: 0.5
+        #size: [1.6, 19]
+        #anchor:
+          #ref: thumb_c1_r1
+          #orient: -90
+          #shift: [-cy/2-3+20, cy/2 - 20/2]
+      - operation: subtract
+        type: rectangle
+        corner: 2
+        size: [5, 9]
+        anchor:
+          ref: thumb_c1_r1
+          orient: -90
+          shift: [cy/2+1.6/2 - 5/2 +31/2 - 5/2 + 1, 40/2 + cy/2 - 9/2]
+      - type: rectangle
+        mirror: true
+        corner: 0.5
+        size: [3, 20]
+        anchor:
+          ref: main_far_bottom
+          shift: [-cy/2-0.5, -cy/2+2]
+          rotate: (180/pi) * atan2((-cx/2 - 2), -(cy/2 + cy+3.5) - -cy/4)
+
+pcbs:
+  mainpcb:
+    outlines:
+      main:
+        outline: cutout_final
+    footprints:
+      promicro:
+        type: promicro
+        anchor:
+          ref: main_middle_top
+          shift: [-36/2 - cx/2 + 1, 0]
+          rotate: 0
+      promicro_left:
+        type: promicro
+        anchor:
+          ref: mirror_main_middle_top
+          shift: [-36/2 - cx/2 + 1, 0]
+          rotate: 180
+      trrs:
+        type: trrs
+        nets:
+          A: TRRS_A
+          B: TRRS_B
+          C: GND
+          D: VCC
+        anchor:
+          ref: main_middle_top
+          shift: [cx/2 + 6 + trrs_half, 7]
+      trrs_left:
+        type: trrs
+        nets:
+          A: TRRS_A_left
+          B: TRRS_B_left
+          C: GND
+          D: VCC
+        anchor:
+          ref: mirror_main_middle_top
+          shift: [cx/2 + 6 - trrs_half, 7]
+      rgb_palm:
+        type: rgb
+        nets:
+          din: rgb_ug3_out
+          dout: rgb_palm_out
+        anchor:
+          ref: main_index_bottom
+          shift: [cx/2+ 10, 0]
+      rgb_palm_left:
+        type: rgb
+        nets:
+          din: rgb_ug3_out_left
+          dout: rgb_palm_out_left
+        anchor:
+          ref: mirror_main_index_bottom
+          shift: [cx/2+ 10, 0]
+      rgb_ug1:
+        type: rgb
+        params:
+          side: B
+        nets:
+          din: rgb_ug1_in
+          dout: rgb_ug1_out
+        anchor:
+          ref: main_far_top
+          shift: [cx/2, -cy/4]
+          rotate: 90
+      rgb_ug2:
+        type: rgb
+        params:
+          side: B
+        nets:
+          din: rgb_ug1_out
+          dout: rgb_ug2_out
+        anchor:
+          ref: main_far_bottom
+          shift: [cx/2, -cy/4]
+          rotate: 90
+      rgb_ug3:
+        type: rgb
+        params:
+          side: B
+        nets:
+          din: rgb_ug2_out
+          dout: rgb_ug3_out
+        anchor:
+          ref: main_index_bottom
+          shift: [cx/2+ 10, 0]
+      rgb_ug4:
+        type: rgb
+        params:
+          side: B
+        nets:
+          din: rgb_palm_out
+          dout: rgb_ug4_out
+        anchor:
+          ref: main_ring_bottom
+          shift: [cx/2, -cy/4]
+          rotate: 90
+      rgb_ug5:
+        type: rgb
+        params:
+          side: B
+        nets:
+          din: rgb_ug4_out
+          dout: rgb_ug5_out
+        anchor:
+          ref: main_pinkie_top
+          shift: [-cx/2, cy/2]
+          rotate: 90
+      rgb_ug6:
+        type: rgb
+        params:
+          side: B
+        nets:
+          din: rgb_ug5_out
+          dout: rgb_ug6_out
+        anchor:
+          ref: main_middle_top
+          rotate: 90
+          shift: [cx/2, -cy/4]
+
+      rgb_ug1_left:
+        type: rgb
+        params:
+          side: B
+        nets:
+          din: rgb_ug1_in_left
+          dout: rgb_ug1_out_left
+        anchor:
+          ref: mirror_main_far_top
+          shift: [cx/2, -cy/4]
+          rotate: 90
+      rgb_ug2_left:
+        type: rgb
+        params:
+          side: B
+        nets:
+          din: rgb_ug1_out_left
+          dout: rgb_ug2_out_left
+        anchor:
+          ref: mirror_main_far_bottom
+          shift: [cx/2, -cy/4]
+          rotate: 90
+      rgb_ug3_left:
+        type: rgb
+        params:
+          side: B
+        nets:
+          din: rgb_ug2_out_left
+          dout: rgb_ug3_out_left
+        anchor:
+          ref: mirror_main_index_bottom
+          shift: [cx/2+ 10, 0]
+      rgb_ug4_left:
+        type: rgb
+        params:
+          side: B
+        nets:
+          din: rgb_palm_out_left
+          dout: rgb_ug4_out_left
+        anchor:
+          ref: mirror_main_ring_bottom
+          shift: [cx/2, -cy/4]
+          rotate: 90
+      rgb_ug5_left:
+        type: rgb
+        params:
+          side: B
+        nets:
+          din: rgb_ug4_out_left
+          dout: rgb_ug5_out_left
+        anchor:
+          ref: mirror_main_pinkie_top
+          shift: [-cx/2, cy/2]
+          rotate: 90
+      rgb_ug6_left:
+        type: rgb
+        params:
+          side: B
+        nets:
+          din: rgb_ug5_out_left
+          dout: rgb_ug6_out_left
+        anchor:
+          ref: mirror_main_middle_top
+          rotate: 90
+          shift: [cx/2, -cy/4]
+
+      scroll:
+        type: scrollwheel
+        anchor:
+          ref: main_index_bottom
+          shift: [-cx/2, -cy-2]
+          rotate: 90
+        nets:
+          from: scroll_switch
+          to: GND
+          A: scroll_r1
+          B: GND
+          C: scroll_r2
+          D: NC
+      scroll_left:
+        type: scrollwheel
+        anchor:
+          ref: mirror_main_index_bottom
+          shift: [-cx/2, -cy-2]
+          rotate: 270
+        nets:
+          from: scroll_switch
+          to: GND
+          A: scroll_r1_left
+          B: GND
+          C: scroll_r2_left
+          D: NC
+
+      j1p:
+        type: jumper
+        params:
+          libref: 'Library:kb_90deg_connector_female'
+        nets:
+          from: j1p
+          to: j1p2
+        anchor:
+          ref: thumb_c1_r1
+          orient: -90
+          shift: [-cy/2-2.25+20, cy/2 - 20/2 + 2 + 5*1.5]
+
+      j1p_left:
+        $extends: pcbs.mainpcb.footprints.j1p
+        anchor:
+          ref: mirror_thumb_c1_r1
+
+      fpc:
+        type: jumper
+        params:
+          libref: 'Connector_FFC-FPC:Hirose_FH12-12S-0.5SH_1x12-1MP_P0.50mm_Horizontal'
+        nets:
+          from: fpc
+          to: fpc2
+        anchor:
+          ref: thumb_c1_r1
+          orient: -90
+          rotate: 90
+          shift: [cy/2+1.6/2, 40/2 + cy/2]
+
+      male_conn:
+        type: jumper
+        params:
+          libref: 'Library:kb_90deg_connector_male'
+        nets:
+          from: male_conn
+          to: male_conn2
+        anchor:
+          ref: main_far_bottom
+          shift:
+            - -cy/2-0.5 + 20/2 * cos(conn_rot + pi/2) + 3/2 * cos(conn_rot)
+            - -cy/2+2 + 20/2 * sin(conn_rot + pi/2) + 3/2 * sin(conn_rot)
+          rotate: (180/pi) * conn_rot
+
+      male_conn_left:
+        $extends: pcbs.mainpcb.footprints.male_conn
+        anchor:
+          ref: mirror_main_far_bottom

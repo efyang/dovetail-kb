@@ -1,0 +1,6 @@
+[submodule "kleeb"]
+	path = kleeb
+	url = git@github.com:crides/kleeb
+[submodule "keyboard_reversible.pretty"]
+	path = keyboard_reversible.pretty
+	url = git@github.com:50an6xy06r6n/keyboard_reversible.pretty
