@@ -4,3 +4,9 @@
 [submodule "keyboard_reversible.pretty"]
 	path = keyboard_reversible.pretty
 	url = git@github.com:50an6xy06r6n/keyboard_reversible.pretty
+[submodule "kbd"]
+	path = kbd
+	url = git@github.com:foostan/kbd
+[submodule "ergogen"]
+	path = ergogen
+	url = git@github.com:efyang/ergogen

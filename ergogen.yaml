@@ -7,18 +7,15 @@ points:
     padding: cy
     footprints:
       choc_hotswap:
-        type: choc
+        $extends: footprints.choc_hotswap
         nets:
-          from: =colrow
-          to: =column_net
-        params:
-          keycaps: true
-          hotswap: true
+          2: =column_net
+          1: =colrow
       diode:
-        type: diode
+        $extends: footprints.combo_diode
         nets:
-          from: =colrow
-          to: =row_net
+          2: =colrow #from
+          1: =row_net #to
         anchor:
           rotate: 180
           shift: [0, -4.7]
@@ -77,7 +74,7 @@ points:
     thumb:
       anchor:
         orient: 90
-        shift: [-65, -90]
+        shift: [-80, -90]
       rows:
         r1:
           padding: cx
@@ -117,6 +114,46 @@ outlines:
         side: both
         size: [1cx - 0.5, 1cy - 0.5] # Choc keycaps are 17.5 x 16.5
         bound: false
+    reset_nub_stage1:
+      - type: rectangle
+        mirror: true
+        size: [10, 35]
+        anchor:
+          ref: main_middle_top
+          shift: [-cx/2 - 36 - 2,-35/2]
+      - operation: subtract
+        type: circle
+        mirror: true
+        radius: 6
+        anchor:
+          ref: main_middle_top
+          shift: [-cx/2 - 36 - 5,0]
+      - operation: subtract
+        type: rectangle
+        mirror: true
+        size: [10, 10]
+        anchor:
+          ref: main_middle_top
+          shift: [-cx/2 - 36 - 10, 0]
+
+    reset_nub_smooth1:
+      - type: outline
+        name: reset_nub_stage1
+        fillet: 4
+    reset_nub_stage2:
+      - type: outline
+        name: reset_nub_smooth1
+      - operation: subtract
+        type: rectangle
+        mirror: true
+        size: [10, 10]
+        anchor:
+          ref: main_middle_top
+          shift: [-cx/2 - 36 - 2,(cy)/2+1]
+    reset_nub:
+      - type: outline
+        name: reset_nub_stage2
+
     cutout_polies:
       - type: polygon
         mirror: true
@@ -130,7 +167,7 @@ outlines:
           - ref: main_far_bottom
             shift: [0, -(cy/2 + cy+3.5)]
           - ref: main_far_bottom
-            shift: [cx, -(cy/2 + cy+3.5)]
+            shift: [cx-3, -(cy/2 + cy+3.5)]
           - ref: main_middle_bottom
             shift: [0, -cy/2 - 15]
           - ref: main_pinkie_bottom
@@ -140,9 +177,9 @@ outlines:
           - ref: main_pinkie_top
             shift: [0.5cx, -0.5cx]
           - ref: main_pinkie_top
-            shift: [0.5cx+1, 0.5cx]
+            shift: [0.5cx+2, 0.5cx]
           - ref: main_pinkie_top
-            shift: [-cx/4+1, 0.75cx]
+            shift: [-cx/4+1, 0.8cx]
           - ref: main_ring_top
             shift: [0.5cx, 0.5cx]
           - ref: main_middle_top
@@ -153,6 +190,16 @@ outlines:
         anchor:
           ref: main_middle_top
           shift: [-cx/2 - 36 - 2,-0.5cy]
+      - operation: subtract
+        type: rectangle
+        mirror: true
+        size: [6, 26]
+        anchor:
+          ref: main_middle_top
+          shift: [-cx/2 - 36 - 2,-10]
+      - type: outline
+        name: reset_nub
+        fillet: 3
       - type: circle
         radius: 40/2
         anchor:
@@ -181,23 +228,15 @@ outlines:
       - type: outline
         name: cutout_all
         fillet: 10
-      #- operation: subtract
-        #type: rectangle
-        #mirror: true
-        #corner: 0.5
-        #size: [1.6, 19]
-        #anchor:
-          #ref: thumb_c1_r1
-          #orient: -90
-          #shift: [-cy/2-3+20, cy/2 - 20/2]
-      - operation: subtract
+      - operation: subtract # fpc cutout
         type: rectangle
         corner: 2
         size: [5, 9]
         anchor:
           ref: thumb_c1_r1
           orient: -90
-          shift: [cy/2+1.6/2 - 5/2 +31/2 - 5/2 + 1, 40/2 + cy/2 - 9/2]
+          rotate: 90
+          shift: [40/2 - 9/2 - 1.6, 40/2 + cy/2 - 5 + 31/2]
       - type: rectangle
         mirror: true
         corner: 0.5
@@ -207,6 +246,186 @@ outlines:
           shift: [-cy/2-0.5, -cy/2+2]
           rotate: (180/pi) * atan2((-cx/2 - 2), -(cy/2 + cy+3.5) - -cy/4)
 
+# base pcb footprints
+footprints:
+  9pin_male_conn:
+    type: library_part
+    params:
+      class: 'J'
+      name: 'Male 9pin'
+      part: 'Library:kb_90deg_connector_male_9pin'
+    nets:
+      1: undefined
+      2: undefined
+      3: undefined
+      4: undefined
+      5: undefined
+      6: undefined
+      7: undefined
+      8: undefined
+      9: undefined
+  9pin_female_conn:
+    type: library_part
+    params:
+      class: 'J'
+      name: 'Female 9pin'
+      part: 'Library:kb_90deg_connector_female_9pin'
+    nets:
+      1: undefined
+      2: undefined
+      3: undefined
+      4: undefined
+      5: undefined
+      6: undefined
+      7: undefined
+      8: undefined
+      9: undefined
+  combo_diode:
+    type: library_part
+    params:
+      class: 'D'
+      part: 'kbd:D3_TH_SMD_v2'
+      name: 'Diode'
+    nets:
+      1: undefined # to
+      2: undefined # from
+  ws2812b:
+    type: library_part
+    params:
+      class: 'DS'
+      name: 'WS2812b'
+      part: 'LED_SMD:LED_WS2812B_PLCC4_5.0x5.0mm_P3.2mm'
+      pin_aliases:
+        din: '2'
+        dout: '4'
+    nets:
+      1: VCC
+      2: undefined
+      3: GND
+      4: undefined
+  scrollwheel:
+    type: library_part
+    params:
+      class: 'S'
+      name: 'Scroll Wheel'
+      part: 'Library:EVQWGD001'
+    nets:
+      S1: undefined
+      S2: GND
+      A: undefined
+      B: GND
+      C: undefined
+      D: undefined #no connect
+  fpc:
+    type: library_part
+    params:
+      class: 'J'
+      name: '12pin FPC'
+      part: 'Library:Hirose_FH12-12S-0.5SH_1x12-1MP_P0.50mm_Horizontal'
+    nets:
+      1: undefined
+      2: undefined
+      3: undefined
+      4: undefined
+      5: undefined
+      6: undefined
+      7: undefined
+      8: undefined
+      9: undefined
+      10: undefined
+      11: undefined
+      12: undefined
+  reset:
+    type: library_part
+    params:
+      class: 'RST'
+      name: 'RST'
+      part: 'Library:SW_SPST_EVQP7C'
+    nets:
+      1: RST
+      2: GND
+  trrs:
+    type: library_part
+    params:
+      class: 'J'
+      name: 'TRRS'
+      part: 'Library:TRRS-PJ-320A'
+    nets:
+      1: TRRS_A
+      2: TRRS_B
+      3: GND
+      4: VCC
+  promicro:
+    type: library_part
+    params:
+      class: 'U'
+      name: 'Pro Micro Footprint'
+      part: 'Library:ProMicro'
+      pin_aliases:
+        P00: 14
+        P01: 13
+        P02: 17
+        P03: 18
+        P04: 19
+        P05: 20
+        P06: 21
+        P07: 22
+        P08: 23
+        P09: 24
+        RAW: 1
+        P21: 5
+        P20: 6
+        P19: 7
+        P18: 8
+        P15: 9
+        P14: 10
+        P16: 11
+        P10: 12
+    nets:
+      1: undefined
+      2: GND
+      3: RST
+      4: VCC
+      5: undefined
+      6: undefined
+      7: undefined
+      8: undefined
+      9: undefined
+      10: undefined
+      11: undefined
+      12: undefined
+      13: undefined
+      14: undefined
+      15: GND
+      16: GND
+      17: undefined
+      18: undefined
+      19: undefined
+      20: undefined
+      21: undefined
+      22: undefined
+      23: undefined
+      24: undefined
+  choc_hotswap:
+    type: library_part
+    params:
+      class: 'SW'
+      name: 'TRRS'
+      part: 'Library:PG1350'
+
+
+#predefined pinouts
+pinouts:
+  9pin_connector: &9pin_connector_pinout
+    1: VCC
+    2: GND
+    3: SDA
+    4: SCL
+    5: C1
+    6: C2
+    7: R4
+    8: R5
+
 pcbs:
   mainpcb:
     outlines:
@@ -214,55 +433,38 @@ pcbs:
         outline: cutout_final
     footprints:
       promicro:
-        type: promicro
+        $extends: footprints.promicro
         anchor:
           ref: main_middle_top
           shift: [-36/2 - cx/2 + 1, 0]
           rotate: 0
       promicro_left:
-        type: promicro
+        $extends: pcbs.mainpcb.footprints.promicro
         anchor:
           ref: mirror_main_middle_top
-          shift: [-36/2 - cx/2 + 1, 0]
           rotate: 180
-      trrs:
-        type: trrs
-        nets:
-          A: TRRS_A
-          B: TRRS_B
-          C: GND
-          D: VCC
+      reset:
+        $extends: footprints.reset
         anchor:
           ref: main_middle_top
-          shift: [cx/2 + 6 + trrs_half, 7]
-      trrs_left:
-        type: trrs
-        nets:
-          A: TRRS_A_left
-          B: TRRS_B_left
-          C: GND
-          D: VCC
+          shift: [-34 - cx/2 + 0.5, 0]
+          rotate: 270
+      reset_left:
+        $extends: pcbs.mainpcb.footprints.reset
         anchor:
           ref: mirror_main_middle_top
-          shift: [cx/2 + 6 - trrs_half, 7]
-      rgb_palm:
-        type: rgb
-        nets:
-          din: rgb_ug3_out
-          dout: rgb_palm_out
+      trrs:
+        $extends: footprints.trrs
         anchor:
-          ref: main_index_bottom
-          shift: [cx/2+ 10, 0]
-      rgb_palm_left:
-        type: rgb
-        nets:
-          din: rgb_ug3_out_left
-          dout: rgb_palm_out_left
+          ref: main_middle_top
+          shift: [cx/2 + 6, 1]
+      trrs_left:
+        $extends: pcbs.mainpcb.footprints.trrs
         anchor:
-          ref: mirror_main_index_bottom
-          shift: [cx/2+ 10, 0]
+          ref: mirror_main_middle_top
+
       rgb_ug1:
-        type: rgb
+        $extends: footprints.ws2812b
         params:
           side: B
         nets:
@@ -273,7 +475,7 @@ pcbs:
           shift: [cx/2, -cy/4]
           rotate: 90
       rgb_ug2:
-        type: rgb
+        $extends: footprints.ws2812b
         params:
           side: B
         nets:
@@ -284,7 +486,7 @@ pcbs:
           shift: [cx/2, -cy/4]
           rotate: 90
       rgb_ug3:
-        type: rgb
+        $extends: footprints.ws2812b
         params:
           side: B
         nets:
@@ -293,8 +495,16 @@ pcbs:
         anchor:
           ref: main_index_bottom
           shift: [cx/2+ 10, 0]
+      rgb_palm:
+        $extends: footprints.ws2812b
+        nets:
+          din: rgb_ug3_out
+          dout: rgb_palm_out
+        anchor:
+          ref: main_index_bottom
+          shift: [cx/2+ 10, 0]
       rgb_ug4:
-        type: rgb
+        $extends: footprints.ws2812b
         params:
           side: B
         nets:
@@ -305,7 +515,7 @@ pcbs:
           shift: [cx/2, -cy/4]
           rotate: 90
       rgb_ug5:
-        type: rgb
+        $extends: footprints.ws2812b
         params:
           side: B
         nets:
@@ -316,7 +526,7 @@ pcbs:
           shift: [-cx/2, cy/2]
           rotate: 90
       rgb_ug6:
-        type: rgb
+        $extends: footprints.ws2812b
         params:
           side: B
         nets:
@@ -328,142 +538,97 @@ pcbs:
           shift: [cx/2, -cy/4]
 
       rgb_ug1_left:
-        type: rgb
-        params:
-          side: B
-        nets:
-          din: rgb_ug1_in_left
-          dout: rgb_ug1_out_left
+        $extends: pcbs.mainpcb.footprints.rgb_ug1
         anchor:
           ref: mirror_main_far_top
           shift: [cx/2, -cy/4]
-          rotate: 90
       rgb_ug2_left:
-        type: rgb
-        params:
-          side: B
-        nets:
-          din: rgb_ug1_out_left
-          dout: rgb_ug2_out_left
+        $extends: pcbs.mainpcb.footprints.rgb_ug2
         anchor:
           ref: mirror_main_far_bottom
-          shift: [cx/2, -cy/4]
-          rotate: 90
       rgb_ug3_left:
-        type: rgb
-        params:
-          side: B
-        nets:
-          din: rgb_ug2_out_left
-          dout: rgb_ug3_out_left
+        $extends: pcbs.mainpcb.footprints.rgb_ug3
         anchor:
           ref: mirror_main_index_bottom
-          shift: [cx/2+ 10, 0]
+      rgb_palm_left:
+        $extends: pcbs.mainpcb.footprints.rgb_palm
+        anchor:
+          ref: mirror_main_index_bottom
       rgb_ug4_left:
-        type: rgb
-        params:
-          side: B
-        nets:
-          din: rgb_palm_out_left
-          dout: rgb_ug4_out_left
+        $extends: pcbs.mainpcb.footprints.rgb_ug4
         anchor:
           ref: mirror_main_ring_bottom
-          shift: [cx/2, -cy/4]
-          rotate: 90
       rgb_ug5_left:
-        type: rgb
-        params:
-          side: B
-        nets:
-          din: rgb_ug4_out_left
-          dout: rgb_ug5_out_left
+        $extends: pcbs.mainpcb.footprints.rgb_ug5
         anchor:
           ref: mirror_main_pinkie_top
-          shift: [-cx/2, cy/2]
-          rotate: 90
       rgb_ug6_left:
-        type: rgb
-        params:
-          side: B
-        nets:
-          din: rgb_ug5_out_left
-          dout: rgb_ug6_out_left
+        $extends: pcbs.mainpcb.footprints.rgb_ug6
         anchor:
           ref: mirror_main_middle_top
-          rotate: 90
-          shift: [cx/2, -cy/4]
 
       scroll:
-        type: scrollwheel
+        $extends: footprints.scrollwheel
         anchor:
           ref: main_index_bottom
-          shift: [-cx/2, -cy-2]
+          shift: [-cx/2-1, -cy-2]
           rotate: 90
         nets:
-          from: scroll_switch
-          to: GND
+          S1: scroll_switch
           A: scroll_r1
-          B: GND
           C: scroll_r2
-          D: NC
       scroll_left:
-        type: scrollwheel
+        $extends: pcbs.mainpcb.footprints.scroll
         anchor:
           ref: mirror_main_index_bottom
           shift: [-cx/2, -cy-2]
           rotate: 270
         nets:
-          from: scroll_switch
-          to: GND
-          A: scroll_r1_left
-          B: GND
-          C: scroll_r2_left
-          D: NC
-
-      j1p:
-        type: jumper
-        params:
-          libref: 'Library:kb_90deg_connector_female'
+      fpc:
+        $extends: footprints.fpc
         nets:
-          from: j1p
-          to: j1p2
+          1: undefined
+          2: undefined
+          3: undefined
+          4: undefined
+          5: undefined
+          6: undefined
+          7: undefined
+          8: undefined
+          9: undefined
+          10: undefined
+          11: undefined
+          12: undefined
+        params:
+          side: B
+        anchor:
+          ref: thumb_c1_r1
+          orient: -90
+          shift: [cy/2+1.6/2, 40/2 + cy/2]
+
+      female_conn:
+        $extends: footprints.9pin_female_conn
+        nets:
+          <<: *9pin_connector_pinout
         anchor:
           ref: thumb_c1_r1
           orient: -90
           shift: [-cy/2-2.25+20, cy/2 - 20/2 + 2 + 5*1.5]
-
-      j1p_left:
-        $extends: pcbs.mainpcb.footprints.j1p
+      female_conn_left:
+        $extends: pcbs.mainpcb.footprints.female_conn
         anchor:
           ref: mirror_thumb_c1_r1
 
-      fpc:
-        type: jumper
-        params:
-          libref: 'Connector_FFC-FPC:Hirose_FH12-12S-0.5SH_1x12-1MP_P0.50mm_Horizontal'
-        nets:
-          from: fpc
-          to: fpc2
-        anchor:
-          ref: thumb_c1_r1
-          orient: -90
-          rotate: 90
-          shift: [cy/2+1.6/2, 40/2 + cy/2]
-
       male_conn:
-        type: jumper
-        params:
-          libref: 'Library:kb_90deg_connector_male'
+        $extends: footprints.9pin_male_conn
         nets:
-          from: male_conn
-          to: male_conn2
+          <<: *9pin_connector_pinout
         anchor:
           ref: main_far_bottom
           shift:
             - -cy/2-0.5 + 20/2 * cos(conn_rot + pi/2) + 3/2 * cos(conn_rot)
             - -cy/2+2 + 20/2 * sin(conn_rot + pi/2) + 3/2 * sin(conn_rot)
           rotate: (180/pi) * conn_rot
-
       male_conn_left:
         $extends: pcbs.mainpcb.footprints.male_conn
         anchor:
