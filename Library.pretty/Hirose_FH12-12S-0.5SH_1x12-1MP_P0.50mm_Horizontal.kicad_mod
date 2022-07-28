@@ -64,13 +64,63 @@
     (rotate (xyz 0 0 0))
   )
   (model "/home/efyang/projects/keyboard/custom-keyboard/kleeb/models/TM035035.step"
-    (offset (xyz 0 0 -6))
+    (offset (xyz 0 0 9.5))
     (scale (xyz 1 1 1))
-    (rotate (xyz 0 0 0))
+    (rotate (xyz 0 180 0))
   )
   (model "/home/efyang/projects/keyboard/custom-keyboard/Library.3dshapes/FH12-12S-0.5SH.step"
     (offset (xyz -10.75 -2.5 2))
     (scale (xyz 1 1 1))
     (rotate (xyz 0 90 180))
+  )
+  (model "/home/efyang/projects/keyboard/custom-keyboard/Models/trackpad-holder-Fusion.step"
+    (offset (xyz 0 0 6.5))
+    (scale (xyz 1 1 1))
+    (rotate (xyz 0 0 0))
+  )
+  (model "/home/efyang/projects/keyboard/custom-keyboard/kbd/kicad-packages3D/kbd.3dshapes/m2 6.5mm.step"
+    (offset (xyz 0 -24 6.5))
+    (scale (xyz 1 1 1))
+    (rotate (xyz 0 0 0))
+  )
+  (model "/home/efyang/projects/keyboard/custom-keyboard/kbd/kicad-packages3D/kbd.3dshapes/m2 4mm.step"
+    (offset (xyz 0 -24 8))
+    (scale (xyz 1 1 1))
+    (rotate (xyz 0 0 0))
+  )
+  (model "/home/efyang/projects/keyboard/custom-keyboard/kbd/kicad-packages3D/kbd.3dshapes/m2 4mm.step"
+    (offset (xyz 0 -24 -1.5))
+    (scale (xyz 1 1 1))
+    (rotate (xyz 0 180 0))
+  )
+  (model "/home/efyang/projects/keyboard/custom-keyboard/kbd/kicad-packages3D/kbd.3dshapes/m2 6.5mm.step"
+    (offset (xyz -20.75 12 6.5))
+    (scale (xyz 1 1 1))
+    (rotate (xyz 0 0 0))
+  )
+  (model "/home/efyang/projects/keyboard/custom-keyboard/kbd/kicad-packages3D/kbd.3dshapes/m2 4mm.step"
+    (offset (xyz -20.75 12 8))
+    (scale (xyz 1 1 1))
+    (rotate (xyz 0 0 0))
+  )
+  (model "/home/efyang/projects/keyboard/custom-keyboard/kbd/kicad-packages3D/kbd.3dshapes/m2 4mm.step"
+    (offset (xyz -20.75 12 -1.5))
+    (scale (xyz 1 1 1))
+    (rotate (xyz 0 180 0))
+  )
+  (model "/home/efyang/projects/keyboard/custom-keyboard/kbd/kicad-packages3D/kbd.3dshapes/m2 6.5mm.step"
+    (offset (xyz 20.75 12 6.5))
+    (scale (xyz 1 1 1))
+    (rotate (xyz 0 0 0))
+  )
+  (model "/home/efyang/projects/keyboard/custom-keyboard/kbd/kicad-packages3D/kbd.3dshapes/m2 4mm.step"
+    (offset (xyz 20.75 12 8))
+    (scale (xyz 1 1 1))
+    (rotate (xyz 0 0 0))
+  )
+  (model "/home/efyang/projects/keyboard/custom-keyboard/kbd/kicad-packages3D/kbd.3dshapes/m2 4mm.step"
+    (offset (xyz 20.75 12 -1.5))
+    (scale (xyz 1 1 1))
+    (rotate (xyz 0 180 0))
   )
 )

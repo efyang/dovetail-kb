@@ -1,4 +1,4 @@
-20634879112127637
+20636538153463495
 Audio_Module
 Reverb_BTDR-1H
 Digital Reverberation Unit, http://www.belton.co.kr/inc/downfile.php?seq=17&file=pdf (footprint from http://www.uk-electronic.de/PDF/BTDR-1.pdf)
@@ -57664,6 +57664,13 @@ Yellow 5381 Series LED VCCLite https://vcclite.com/wp-content/uploads/wpallimpor
 Yellow 5381 Series LED
 0
 2
+2
+Library
+D3_TH_SMD_v2
+Resitance 3 pas
+R
+0
+6
 2
 Library
 EVQWGD001

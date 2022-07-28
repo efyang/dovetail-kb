@@ -1,6 +1,13 @@
 units:
-  trrs_half: 2.25
+  trackpad_size: 54
+  trackpad_shift: -5
+  pcb_thickness: 1.6
   conn_rot: atan2((-cx/2 - 2), -(cy/2 + cy+3.5) - -cy/4)
+  trackpad_center_shift_x: cy/2+pcb_thickness/2
+  trackpad_center_shift_y: trackpad_size/2 + cy/2 + trackpad_shift
+  trackpad_screw_offset_radius: 24
+  promicro_center_shift_x: -36/2 - cx/2 + 1
+  promicro_center_shift_y: 0
 
 points:
   key:
@@ -76,12 +83,12 @@ points:
         orient: 90
         shift: [-80, -90]
       rows:
-        r1:
+        r4:
           padding: cx
           row_net: R4
           mirror:
             row_net: R4_left
-        r2:
+        r5:
           asym: right
           padding: cx
           row_net: R5
@@ -89,13 +96,13 @@ points:
             row_net: R5_left
       columns:
         c1:
-          spread: cy+1.6
+          spread: cy+pcb_thickness
           key:
             column_net: C1
             origin: [0, 0]
             rotate: 90
         c2:
-          spread: cy+1.6
+          spread: cy+pcb_thickness
           key:
             column_net: C2
             origin: [0, 0]
@@ -200,25 +207,48 @@ outlines:
       - type: outline
         name: reset_nub
         fillet: 3
+      #- type: circle
+        #radius: trackpad_size/2
+        #anchor:
+          #orient: -90
+          #ref: thumb_c1_r4
+          #shift: [trackpad_center_shift_x, trackpad_center_shift_y]
       - type: circle
-        radius: 40/2
+        radius: trackpad_size/4
         anchor:
           orient: -90
-          ref: thumb_c1_r1
-          shift: [cy/2+1.6/2, 40/2 + cy/2]
+          ref: thumb_c1_r4
+          shift: [trackpad_center_shift_x, trackpad_center_shift_y]
+      - type: circle
+        radius: trackpad_screw_offset_radius/2 + 3
+        anchor:
+          orient: -90
+          ref: thumb_c1_r4
+          shift: [trackpad_center_shift_x, trackpad_center_shift_y + trackpad_screw_offset_radius/2]
+      - type: circle
+        radius: trackpad_screw_offset_radius/2 + 3
+        anchor:
+          orient: -90
+          ref: thumb_c1_r4
+          shift:
+            - trackpad_center_shift_x + trackpad_screw_offset_radius/2 * cos((120+90) * pi/180)
+            - trackpad_center_shift_y + trackpad_screw_offset_radius/2 * sin((120+90) * pi/180)
+      - type: circle
+        radius: trackpad_screw_offset_radius/2 + 3
+        anchor:
+          orient: -90
+          ref: thumb_c1_r4
+          shift:
+            - trackpad_center_shift_x + trackpad_screw_offset_radius/2 * cos((240+90) * pi/180)
+            - trackpad_center_shift_y + trackpad_screw_offset_radius/2 * sin((240+90) * pi/180)
+
       - type: rectangle
         size: [40, 40]
+        mirror: true
         anchor:
-          ref: mirror_thumb_c1_r1
+          ref: mirror_thumb_c1_r4
           orient: -90
           shift: [cy/2+2.2/2+20, -40/2+cx/2]
-      - type: rectangle
-        size: [40, 25]
-        corner: 10
-        anchor:
-          ref: thumb_c1_r1
-          orient: -90
-          shift: [-cy/2-2.2, -40/2+cy/2-1]
     cutout_all:
       - type: outline
         name: cutout_polies
@@ -228,15 +258,15 @@ outlines:
       - type: outline
         name: cutout_all
         fillet: 10
-      - operation: subtract # fpc cutout
-        type: rectangle
-        corner: 2
-        size: [5, 9]
-        anchor:
-          ref: thumb_c1_r1
-          orient: -90
-          rotate: 90
-          shift: [40/2 - 9/2 - 1.6, 40/2 + cy/2 - 5 + 31/2]
+      #- operation: subtract # fpc cutout
+        #type: rectangle
+        #corner: 2
+        #size: [5, 9]
+        #anchor:
+          #ref: thumb_c1_r4
+          #orient: -90
+          #rotate: 90
+          #shift: [40/2 - 9/2 - pcb_thickness, trackpad_size/2 + cy/2 + trackpad_shift - 5 + 31/2]
       - type: rectangle
         mirror: true
         corner: 0.5
@@ -284,7 +314,7 @@ footprints:
     type: library_part
     params:
       class: 'D'
-      part: 'kbd:D3_TH_SMD_v2'
+      part: 'Library:D3_TH_SMD_v2'
       name: 'Diode'
     nets:
       1: undefined # to
@@ -351,9 +381,9 @@ footprints:
       name: 'TRRS'
       part: 'Library:TRRS-PJ-320A'
     nets:
-      1: TRRS_A
-      2: TRRS_B
-      3: GND
+      1: GND
+      2: GND
+      3: SERIAL
       4: VCC
   promicro:
     type: library_part
@@ -410,9 +440,16 @@ footprints:
     type: library_part
     params:
       class: 'SW'
-      name: 'TRRS'
+      name: 'PG1350'
       part: 'Library:PG1350'
-
+  m2_grounded:
+    type: library_part
+    params:
+      class: 'H'
+      name: 'M2'
+      part: 'kbd:M2_HOLE_v3'
+    nets:
+      1: GND
 
 #predefined pinouts
 pinouts:
@@ -426,6 +463,14 @@ pinouts:
     7: R4
     8: R5
 
+anchors:
+  promicro: &promicro_anchor
+    ref: main_middle_top
+    shift: [promicro_center_shift_x, promicro_center_shift_y]
+  promicro_left:
+    <<: *promicro_anchor
+    ref: mirror_main_middle_top
+
 pcbs:
   mainpcb:
     outlines:
@@ -435,9 +480,26 @@ pcbs:
       promicro:
         $extends: footprints.promicro
         anchor:
-          ref: main_middle_top
-          shift: [-36/2 - cx/2 + 1, 0]
+          <<: *promicro_anchor
           rotate: 0
+        nets:
+          P00: SERIAL
+          P01: RGB
+          P02: SDA
+          P03: SCL
+          P04: C1
+          P05: C2
+          P06: C3
+          P07: C4
+          P08: C5
+          P09: R1
+          P10: R2
+          P11: R3
+          P12: R4
+          P13: R5
+          P16: scroll_r1
+          P14: scroll_r2
+          P15: scroll_switch
       promicro_left:
         $extends: pcbs.mainpcb.footprints.promicro
         anchor:
@@ -468,7 +530,7 @@ pcbs:
         params:
           side: B
         nets:
-          din: rgb_ug1_in
+          din: RGB
           dout: rgb_ug1_out
         anchor:
           ref: main_far_top
@@ -541,7 +603,6 @@ pcbs:
         $extends: pcbs.mainpcb.footprints.rgb_ug1
         anchor:
           ref: mirror_main_far_top
-          shift: [cx/2, -cy/4]
       rgb_ug2_left:
         $extends: pcbs.mainpcb.footprints.rgb_ug2
         anchor:
@@ -567,6 +628,62 @@ pcbs:
         anchor:
           ref: mirror_main_middle_top
 
+# mounting holes
+      mh1:
+        $extends: footprints.m2_grounded
+        anchor:
+          ref: main_index_home
+          shift: [-cx/2, -2]
+      mh1_left:
+        $extends: pcbs.mainpcb.footprints.mh1
+        anchor:
+          ref: mirror_main_index_home
+      mh2:
+        $extends: footprints.m2_grounded
+        anchor:
+          ref: main_middle_top
+          shift: [-cx/2+1, -cy/2]
+      mh2_left:
+        $extends: pcbs.mainpcb.footprints.mh2
+        anchor:
+          ref: mirror_main_middle_top
+      mh3:
+        $extends: footprints.m2_grounded
+        anchor:
+          ref: main_ring_top
+          shift: [-cx/2, -cy/2+3]
+      mh3_left:
+        $extends: pcbs.mainpcb.footprints.mh3
+        anchor:
+          ref: mirror_main_ring_top
+      mh4:
+        $extends: footprints.m2_grounded
+        anchor:
+          ref: main_pinkie_home
+          shift: [0, cy/2+5]
+      mh4_left:
+        $extends: pcbs.mainpcb.footprints.mh4
+        anchor:
+          ref: mirror_main_pinkie_home
+      mh5:
+        $extends: footprints.m2_grounded
+        anchor:
+          ref: main_ring_bottom
+          shift: [0, -cy/2]
+      mh5_left:
+        $extends: pcbs.mainpcb.footprints.mh5
+        anchor:
+          ref: mirror_main_ring_bottom
+      mh6:
+        $extends: footprints.m2_grounded
+        anchor:
+          ref: main_index_bottom
+          shift: [0, -cy/2]
+      mh6_left:
+        $extends: pcbs.mainpcb.footprints.mh6
+        anchor:
+          ref: mirror_main_index_bottom
+
       scroll:
         $extends: footprints.scrollwheel
         anchor:
@@ -586,38 +703,50 @@ pcbs:
         nets:
       fpc:
         $extends: footprints.fpc
-        nets:
-          1: undefined
-          2: undefined
-          3: undefined
-          4: undefined
-          5: undefined
-          6: undefined
-          7: undefined
-          8: undefined
-          9: undefined
-          10: undefined
-          11: undefined
-          12: undefined
+        nets: # pins match, no flip
+          4: SCL
+          3: SDA
+          2: GND
+          1: VCC #must be 3.3 (or have to desolder)
         params:
-          side: B
+          side: F
         anchor:
-          ref: thumb_c1_r1
+          ref: thumb_c1_r4
           orient: -90
-          shift: [cy/2+1.6/2, 40/2 + cy/2]
+          rotate: 180
+          shift: [trackpad_center_shift_x, trackpad_center_shift_y]
+      trackpad_mh1:
+        $extends: footprints.m2_grounded
+        anchor:
+          ref: thumb_c1_r4
+          orient: -90
+          shift: [trackpad_center_shift_x, trackpad_center_shift_y + trackpad_screw_offset_radius]
+      trackpad_mh2:
+        $extends: pcbs.mainpcb.footprints.trackpad_mh1
+        anchor:
+          shift:
+            - trackpad_center_shift_x + trackpad_screw_offset_radius * cos((240+90) * pi/180)
+            - trackpad_center_shift_y + trackpad_screw_offset_radius * sin((240+90) * pi/180)
+      trackpad_mh3:
+        $extends: pcbs.mainpcb.footprints.trackpad_mh1
+        anchor:
+          shift:
+            - trackpad_center_shift_x + trackpad_screw_offset_radius * cos((120+90) * pi/180)
+            - trackpad_center_shift_y + trackpad_screw_offset_radius * sin((120+90) * pi/180)
+
 
       female_conn:
         $extends: footprints.9pin_female_conn
         nets:
           <<: *9pin_connector_pinout
         anchor:
-          ref: thumb_c1_r1
+          ref: thumb_c1_r4
           orient: -90
-          shift: [-cy/2-2.25+20, cy/2 - 20/2 + 2 + 5*1.5]
+          shift: [-cy/2-2.25+20, cy/2 - 20/2 + 6 + 5*1.5]
       female_conn_left:
         $extends: pcbs.mainpcb.footprints.female_conn
         anchor:
-          ref: mirror_thumb_c1_r1
+          ref: mirror_thumb_c1_r4
 
       male_conn:
         $extends: footprints.9pin_male_conn
