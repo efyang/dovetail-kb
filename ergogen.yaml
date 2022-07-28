@@ -448,6 +448,15 @@ footprints:
       part: 'kbd:M2_HOLE_v3'
     nets:
       1: GND
+  resistor:
+    type: library_part
+    params:
+      class: 'R'
+      name: 'Resistor'
+      part: 'Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P10.16mm_Horizontal'
+    nets:
+      1: undefined
+      2: undefined
 
 #predefined pinouts
 pinouts:
@@ -722,6 +731,27 @@ pcbs:
           orient: -90
           rotate: 180
           shift: [trackpad_center_shift_x, trackpad_center_shift_y]
+      r_pullup_sda:
+        $extends: footprints.resistor
+        params:
+          name: '4K7'
+        nets:
+          2: SDA
+          1: VCC
+        anchor:
+          ref: thumb_c1_r4
+          orient: -90
+          rotate: -90
+          shift: [trackpad_center_shift_x + 13, trackpad_center_shift_y - 5]
+      r_pullup_scl:
+        $extends: pcbs.mainpcb.footprints.r_pullup_sda
+        nets:
+          2: SCL
+          1: VCC
+        anchor:
+          shift: [trackpad_center_shift_x - 13, trackpad_center_shift_y - 5]
+
+
       trackpad_mh1:
         $extends: footprints.m2_grounded
         anchor:
