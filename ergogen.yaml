@@ -8,6 +8,7 @@ units:
   trackpad_screw_offset_radius: 24
   promicro_center_shift_x: -36/2 - cx/2 + 1
   promicro_center_shift_y: 0
+  connector_length: 19
 
 points:
   key:
@@ -32,16 +33,10 @@ points:
       rows:
         bottom:
           row_net: R3
-          mirror:
-            row_net: R3_left
         home:
           row_net: R2
-          mirror:
-            row_net: R2_left
         top:
           row_net: R1
-          mirror:
-            row_net: R1_left
       columns:
         far:
           spread: cx
@@ -86,14 +81,10 @@ points:
         r4:
           padding: cx
           row_net: R4
-          mirror:
-            row_net: R4_left
         r5:
           asym: right
           padding: cx
           row_net: R5
-          mirror:
-            row_net: R5_left
       columns:
         c1:
           spread: cy+pcb_thickness
@@ -207,7 +198,7 @@ outlines:
       - type: outline
         name: reset_nub
         fillet: 3
-      #- type: circle
+      #- type: circl1
         #radius: trackpad_size/2
         #anchor:
           #orient: -90
@@ -241,14 +232,21 @@ outlines:
           shift:
             - trackpad_center_shift_x + trackpad_screw_offset_radius/2 * cos((240+90) * pi/180)
             - trackpad_center_shift_y + trackpad_screw_offset_radius/2 * sin((240+90) * pi/180)
-
       - type: rectangle
-        size: [40, 40]
+        size: [36, 42]
         mirror: true
         anchor:
           ref: mirror_thumb_c1_r4
           orient: -90
-          shift: [cy/2+2.2/2+20, -40/2+cx/2]
+          shift: [cy/2+pcb_thickness/2+36/2, -42/2+cx/2]
+      - operation: subtract
+        type: circle
+        radius: 20
+        mirror: true
+        anchor:
+          ref: mirror_thumb_c1_r4
+          orient: -90
+          shift: [cy/2+pcb_thickness/2, -cx/2-22]
     cutout_all:
       - type: outline
         name: cutout_polies
@@ -270,7 +268,7 @@ outlines:
       - type: rectangle
         mirror: true
         corner: 0.5
-        size: [3, 20]
+        size: [3, connector_length]
         anchor:
           ref: main_far_bottom
           shift: [-cy/2-0.5, -cy/2+2]
@@ -454,6 +452,15 @@ footprints:
 #predefined pinouts
 pinouts:
   9pin_connector: &9pin_connector_pinout
+    1: VCC
+    2: GND
+    3: SDA
+    4: SCL
+    5: C1
+    6: C2
+    7: R4
+    8: R5
+  9pin_connector_left: &9pin_connector_pinout_left
     1: VCC
     2: GND
     3: SDA
@@ -742,7 +749,7 @@ pcbs:
         anchor:
           ref: thumb_c1_r4
           orient: -90
-          shift: [-cy/2-2.25+20, cy/2 - 20/2 + 6 + 5*1.5]
+          shift: [-cy/2-2.25+20, cy/2 - 20/2 + 6 + 6 + 5*1.5]
       female_conn_left:
         $extends: pcbs.mainpcb.footprints.female_conn
         anchor:
@@ -755,8 +762,8 @@ pcbs:
         anchor:
           ref: main_far_bottom
           shift:
-            - -cy/2-0.5 + 20/2 * cos(conn_rot + pi/2) + 3/2 * cos(conn_rot)
-            - -cy/2+2 + 20/2 * sin(conn_rot + pi/2) + 3/2 * sin(conn_rot)
+            - -cy/2-0.5 + connector_length/2 * cos(conn_rot + pi/2) + 3/2 * cos(conn_rot)
+            - -cy/2+2 + connector_length/2 * sin(conn_rot + pi/2) + 3/2 * sin(conn_rot)
           rotate: (180/pi) * conn_rot
       male_conn_left:
         $extends: pcbs.mainpcb.footprints.male_conn

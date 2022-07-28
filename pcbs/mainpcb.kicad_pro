@@ -161,8 +161,8 @@
       "idf": "",
       "netlist": "",
       "specctra_dsn": "",
-      "step": "",
-      "vrml": ""
+      "step": "../Models/left_thumb.step",
+      "vrml": "mainpcb.wrl"
     },
     "page_layout_descr_file": ""
   },

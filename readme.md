@@ -5,6 +5,10 @@ Uses a modified version of ergogen that supports placing arbitrary library parts
 ![Top Down](images/topdown.jpg)
 ![Tilted](images/tilted.jpg)
 ![Bottom](images/bottom.jpg)
+### FreeCAD Pics (some parts don't make it)
+![Flat Orthographic](images/flat-orthographic.png)
+![Tented Orthographic](images/tent-orthographic.png)
+![Tented Perspective](images/tent-perspective.png)
 
 ## Features
 - underglow
