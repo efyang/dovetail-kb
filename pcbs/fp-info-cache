@@ -1,4 +1,4 @@
-20636538153483495
+20638197613344742
 Audio_Module
 Reverb_BTDR-1H
 Digital Reverberation Unit, http://www.belton.co.kr/inc/downfile.php?seq=17&file=pdf (footprint from http://www.uk-electronic.de/PDF/BTDR-1.pdf)
@@ -57693,6 +57693,13 @@ PG1350
 0
 2
 2
+Library
+PatternA
+
+
+0
+0
+0
 Library
 ProMicro
 

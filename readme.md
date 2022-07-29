@@ -23,3 +23,7 @@ To update using ergogen:
 - Tools -> Update Footprints from Library
 - Check all "Update Options"
 - Update
+
+## Notes
+- Designed for 3.3v power/logic (kb2040)
+    - if you want to use 5v then you have to desolder more on the trackpad pcb

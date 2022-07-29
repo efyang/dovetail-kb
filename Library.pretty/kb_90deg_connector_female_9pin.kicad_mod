@@ -10,6 +10,8 @@
     (effects (font (size 1 1) (thickness 0.15)))
     (tstamp 8fb7d4e2-c2e4-463d-bab3-21de0005d4cc)
   )
+  (fp_circle (center 1.75 -9.5) (end 2 -9.5) (layer "B.SilkS") (width 0.12) (fill none) (tstamp 2b23ca38-d7bd-4224-ad8f-269dc18dd6c4))
+  (fp_circle (center 1.75 -9.5) (end 2 -9.5) (layer "F.SilkS") (width 0.12) (fill none) (tstamp dbeabe40-deae-4a10-ae8d-1bf57f31ce72))
   (fp_line (start 0.3 -9.75) (end -0.3 -9.75) (layer "Edge.Cuts") (width 0.15) (tstamp 1e5996da-b173-4ecb-b79e-cb77f84e0a8f))
   (fp_line (start 0.8 9.25) (end 0.8 -9.25) (layer "Edge.Cuts") (width 0.15) (tstamp 5a8ec44a-1e04-49c4-9301-dc6e3ad94f6e))
   (fp_line (start -0.3 9.75) (end 0.3 9.75) (layer "Edge.Cuts") (width 0.15) (tstamp bfb6f405-ae1a-45ab-b358-c953cba3b0bf))

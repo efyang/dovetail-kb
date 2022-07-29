@@ -10,6 +10,8 @@
     (effects (font (size 1 1) (thickness 0.15)))
     (tstamp 8fb7d4e2-c2e4-463d-bab3-21de0005d4cc)
   )
+  (fp_circle (center 0 9.25) (end 0.25 9.25) (layer "B.SilkS") (width 0.12) (fill none) (tstamp 849e7d24-77c9-409d-8ff8-00cdb9439a00))
+  (fp_circle (center 0 9.25) (end 0.25 9.25) (layer "F.SilkS") (width 0.12) (fill none) (tstamp ba463a2d-7f61-4fba-ac85-76ea6533ddf7))
   (pad "1" thru_hole circle (at 0 8) (size 0.6 0.6) (drill 0.3) (layers *.Cu)
     (zone_connect 2) (tstamp 3137ea17-ad8e-4aac-81a8-f2b874be036e))
   (pad "1" smd rect (at 0 8) (size 3 1.5) (layers "B.Cu" "B.Paste" "B.Mask") (tstamp 53465e6d-fc3e-49d1-a636-88c679c5f0a8))

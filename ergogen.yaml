@@ -324,8 +324,8 @@ footprints:
       name: 'WS2812b'
       part: 'LED_SMD:LED_WS2812B_PLCC4_5.0x5.0mm_P3.2mm'
       pin_aliases:
-        din: '2'
-        dout: '4'
+        din: 4
+        dout: 2
     nets:
       1: VCC
       2: undefined
@@ -339,7 +339,7 @@ footprints:
       part: 'Library:EVQWGD001'
     nets:
       S1: undefined
-      S2: GND
+      S2: undefined
       A: undefined
       B: GND
       C: undefined
@@ -457,6 +457,17 @@ footprints:
     nets:
       1: undefined
       2: undefined
+  i2c_header:
+    type: library_part
+    params:
+      class: 'J'
+      name: 'I2C Breakout'
+      part: 'Connector_PinHeader_2.54mm:PinHeader_1x04_P2.54mm_Vertical'
+    nets:
+      1: VCC
+      2: GND
+      3: SDA
+      4: SCL
 
 #predefined pinouts
 pinouts:
@@ -510,12 +521,13 @@ pcbs:
           P08: C5
           P09: R1
           P10: R2
-          P11: R3
-          P12: R4
-          P13: R5
-          P16: scroll_r1
-          P14: scroll_r2
-          P15: scroll_switch
+          P16: R3
+          P14: R4
+          P15: R5
+          P18: scroll_r1
+          P19: scroll_r2
+          P20: scroll_switch
+
       promicro_left:
         $extends: pcbs.mainpcb.footprints.promicro
         anchor:
@@ -538,6 +550,17 @@ pcbs:
           shift: [cx/2 + 6, 1]
       trrs_left:
         $extends: pcbs.mainpcb.footprints.trrs
+        anchor:
+          ref: mirror_main_middle_top
+
+      i2c_header:
+        $extends: footprints.i2c_header
+        anchor:
+          ref: main_middle_top
+          shift: [-33, 0]
+          rotate: 90
+      i2c_header_left:
+        $extends: pcbs.mainpcb.footprints.i2c_header
         anchor:
           ref: mirror_main_middle_top
 
@@ -573,6 +596,7 @@ pcbs:
         anchor:
           ref: main_index_bottom
           shift: [cx/2+ 10, 0]
+          rotate: 180
       rgb_palm:
         $extends: footprints.ws2812b
         nets:
@@ -581,6 +605,7 @@ pcbs:
         anchor:
           ref: main_index_bottom
           shift: [cx/2+ 10, 0]
+          rotate: 180
       rgb_ug4:
         $extends: footprints.ws2812b
         params:
@@ -591,7 +616,7 @@ pcbs:
         anchor:
           ref: main_ring_bottom
           shift: [cx/2, -cy/4]
-          rotate: 90
+          rotate: 270
       rgb_ug5:
         $extends: footprints.ws2812b
         params:
@@ -602,7 +627,7 @@ pcbs:
         anchor:
           ref: main_pinkie_top
           shift: [-cx/2, cy/2]
-          rotate: 90
+          rotate: 270
       rgb_ug6:
         $extends: footprints.ws2812b
         params:
@@ -619,30 +644,37 @@ pcbs:
         $extends: pcbs.mainpcb.footprints.rgb_ug1
         anchor:
           ref: mirror_main_far_top
+          rotate: 180 + 90
       rgb_ug2_left:
         $extends: pcbs.mainpcb.footprints.rgb_ug2
         anchor:
           ref: mirror_main_far_bottom
+          rotate: 180 + 90
       rgb_ug3_left:
         $extends: pcbs.mainpcb.footprints.rgb_ug3
         anchor:
           ref: mirror_main_index_bottom
+          rotate: 180 + 180
       rgb_palm_left:
         $extends: pcbs.mainpcb.footprints.rgb_palm
         anchor:
           ref: mirror_main_index_bottom
+          rotate: 180 + 180
       rgb_ug4_left:
         $extends: pcbs.mainpcb.footprints.rgb_ug4
         anchor:
           ref: mirror_main_ring_bottom
+          rotate: 180 + 270
       rgb_ug5_left:
         $extends: pcbs.mainpcb.footprints.rgb_ug5
         anchor:
           ref: mirror_main_pinkie_top
+          rotate: 180 + 270
       rgb_ug6_left:
         $extends: pcbs.mainpcb.footprints.rgb_ug6
         anchor:
           ref: mirror_main_middle_top
+          rotate: 180 + 90
 
 # mounting holes
       mh1:
@@ -707,7 +739,8 @@ pcbs:
           shift: [-cx/2-1, -cy-2]
           rotate: 90
         nets:
-          S1: scroll_switch
+          S1: GND
+          S2: scroll_switch
           A: scroll_r1
           C: scroll_r2
       scroll_left:
