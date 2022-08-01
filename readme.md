@@ -47,6 +47,7 @@ To update using ergogen:
 | 1   | Trackpad holder part       | Probably want 2 just in case                                                                  | [In repo](Models/trackpad-holder-Fusion.stl)              |     |
 | 1   | 1 of each PCB minimum      | left-main, right-main, left-thumb, right-thumb (you could actually interchange the thumbs)    | [In repo](gerbers)                                        |     |
 | 1   | Tenting Attachment         | TBD                                                                                           |                                                           |     |
+| 36  | Diodes           |                                                                                               |      |     |
 | 1   | Case (optional)            |                                                                                               | https://www.aliexpress.com/item/3256803532895347.html     |     |
 
 ## Notes
