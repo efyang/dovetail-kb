@@ -59,3 +59,12 @@ To update using ergogen:
 -   Designed for 3.3v power/logic (kb2040)
     -   if you want to use 5v then you have to desolder more on the trackpad pcb
 -   Rectangular size (at most): ~ 14cmx11cmx5.5cm
+
+## Inspo/Useful Links
+- https://www.reddit.com/r/ErgoMechKeyboards/comments/uq2yyq/kyria_with_cirque_circle_trackpad/
+- https://github.com/macroxue/keyboard-tenting
+- https://www.reddit.com/r/PeripheralDesign/comments/uk9l94/trackball_emulation_on_cirque_glidepoint_circle/
+- https://www.cirque.com/message-board?p=post%2Fusing-the-cirque-tm035035-and-tm040040-circle-trackpads-in-5v-systems-10126328
+- https://github.com/dkao/qmk_firmware/commits/cirque_trackpad_features
+- https://www.thingiverse.com/thing:5385829/files
+- https://github.com/Bastardkb/dilemma
