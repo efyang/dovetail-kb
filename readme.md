@@ -46,7 +46,11 @@ To update using ergogen:
 | 2   | EVQ-P7C01P Reset Switch    | I wanted to be fancy lol                                                                      | https://www.mouser.com/ProductDetail/667-EVQP7C01P        |     |
 | 1   | Trackpad holder part       | Probably want 2 just in case                                                                  | [In repo](Models/trackpad-holder-Fusion.stl)              |     |
 | 1   | 1 of each PCB minimum      | left-main, right-main, left-thumb, right-thumb (you could actually interchange the thumbs)    | [In repo](gerbers)                                        |     |
-| 1   | Tenting Attachment         | TBD                                                                                           |                                                           |     |
+| 2   | Plates        | Untested                                                                                           | [In repo](outlines/cutout_with_holes.dxf)                                                          |     |
+| 12   | M2 standoffs (5mm)         | Untested                                                                                           | https://www.aliexpress.com/item/2251832782591461.html                                                          |     |
+| 2  | 1/4in lock nut         | Untested                                                                                           | https://www.aliexpress.com/item/3256802483856268.html                                                          |     |
+| 2  | Camera swivel thingy        | Untested                                                                                           | https://www.aliexpress.com/item/3256803400603212.html                                                          |     |
+| 2  | Magnetic Base        | Untested                                                                                           | https://www.aliexpress.com/item/3256803496352836.html                                                          |     |
 | 36  | Diodes           |                                                                                               |      |     |
 | 1   | Case (optional)            |                                                                                               | https://www.aliexpress.com/item/3256803532895347.html     |     |
 
