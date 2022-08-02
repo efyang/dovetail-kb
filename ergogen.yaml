@@ -9,6 +9,8 @@ units:
   promicro_center_shift_x: -36/2 - cx/2 + 1
   promicro_center_shift_y: 0
   connector_length: 19
+  m2_clearance_radius: 2.4/2
+  i1_4_clearance_radius: 6.6/2
 
 points:
   key:
@@ -273,6 +275,60 @@ outlines:
           ref: main_far_bottom
           shift: [-cy/2-0.5, -cy/2+2]
           rotate: (180/pi) * atan2((-cx/2 - 2), -(cy/2 + cy+3.5) - -cy/4)
+    cutout_with_holes:
+      - type: outline
+        name: cutout_all
+        fillet: 10
+      - type: circle
+        mirror: true
+        operation: subtract
+        radius: i1_4_clearance_radius
+        anchor:
+          ref: main_middle_bottom
+          shift: [0, cy/2]
+      - type: circle
+        mirror: true
+        operation: subtract
+        radius: m2_clearance_radius
+        anchor:
+          ref: main_index_home
+          shift: [-cx/2, -2]
+      - type: circle
+        mirror: true
+        operation: subtract
+        radius: m2_clearance_radius
+        anchor:
+          ref: main_middle_top
+          shift: [-cx/2+1, -cy/2]
+      - type: circle
+        mirror: true
+        operation: subtract
+        radius: m2_clearance_radius
+        anchor:
+          ref: main_ring_top
+          shift: [-cx/2, -cy/2+3]
+      - type: circle
+        mirror: true
+        operation: subtract
+        radius: m2_clearance_radius
+        anchor:
+          ref: main_pinkie_home
+          shift: [0, cy/2+5]
+      - type: circle
+        mirror: true
+        operation: subtract
+        radius: m2_clearance_radius
+        anchor:
+          ref: main_ring_bottom
+          shift: [0, -cy/2]
+      - type: circle
+        mirror: true
+        operation: subtract
+        radius: m2_clearance_radius
+        anchor:
+          ref: main_index_bottom
+          shift: [0, -cy/2]
+
 
 # base pcb footprints
 footprints:
