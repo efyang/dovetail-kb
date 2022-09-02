@@ -6,7 +6,7 @@ Uses a modified version of ergogen that supports placing arbitrary library parts
 ![Tilted](images/tilted.jpg)
 ![Bottom](images/bottom.jpg)
 
-### FreeCAD Pics (some parts don't make it)
+### FreeCAD Pics (some parts didn't survive the conversion process)
 
 ![Flat Orthographic](images/flat-orthographic.png)
 ![Tented Orthographic](images/tent-orthographic.png)
