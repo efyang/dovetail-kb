@@ -1,4 +1,4 @@
-# custom keyboard
+# Dovetail Keyboard
 
 Uses a modified version of ergogen that supports placing arbitrary library parts.
 
