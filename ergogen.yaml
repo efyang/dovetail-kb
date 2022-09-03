@@ -249,6 +249,62 @@ outlines:
           ref: mirror_thumb_c1_r4
           orient: -90
           shift: [cy/2+pcb_thickness/2, -cx/2-22]
+    palm_led_diffuser_outline:
+      - type: polygon
+        mirror: true
+        points:
+          - ref: main_middle_bottom
+            shift: [-cx/2 + 1, -cy/2 - 1]
+          - ref: main_middle_bottom
+            shift: [cx/2 - 0.5 - 2, -cy/2 - 1]
+          - ref: main_middle_bottom
+            shift: [cx/2 - 0.5, -cy/2 - 5 - 0.5]
+          - ref: main_ring_bottom
+            shift: [-6, -cy/2 - 0.5 - 2]
+          - ref: main_ring_bottom
+            shift: [-6, -cy/2-12.5]
+          - ref: main_middle_bottom
+            shift: [2, -cy/2-17 + 2]
+          - ref: main_index_bottom
+            shift: [cx/2 + 1, -cy/2 - 1]
+    palm_led_diffuser_stage0:
+      - type: outline
+        name: palm_led_diffuser_outline
+        fillet: 5
+    palm_led_diffuser_holes:
+      - type: circle
+        mirror: true
+        radius: m2_clearance_radius
+        anchor:
+          $extends: pcbs.mainpcb.footprints.mh7.anchor
+      - type: circle
+        mirror: true
+        radius: m2_clearance_radius
+        anchor:
+          $extends: pcbs.mainpcb.footprints.mh8.anchor
+
+    palm_led_diffuser_final:
+      - type: outline
+        name: palm_led_diffuser_stage0
+        fillet: 2
+      - type: outline
+        name: palm_led_diffuser_holes
+        operation: subtract
+    palm_led_diffuser_spacer:
+      - type: outline
+        name: palm_led_diffuser_final
+      - type: rectangle
+        operation: subtract
+        size: [4.5*2, 3.5*2]
+        corner: 2
+        mirror: true
+        anchor:
+          ref: main_index_bottom
+          shift: [cx/2 + 10 - 4.5, 0 - 3.5]
+      - type: outline
+        name: palm_led_diffuser_holes
+        operation: subtract
+
     cutout_all:
       - type: outline
         name: cutout_polies
@@ -328,6 +384,15 @@ outlines:
         anchor:
           ref: main_index_bottom
           shift: [0, -cy/2]
+    # test_diffuser_loc:
+    #   - type: outline
+    #     name: cutout_with_holes
+    #   - type: outline
+    #     name: palm_led_diffuser_final
+    #     operation: subtract
+    #   - type: outline
+    #     operation: subtract
+    #     name: keycap_outlines
 
 
 # base pcb footprints
@@ -787,6 +852,26 @@ pcbs:
         $extends: pcbs.mainpcb.footprints.mh6
         anchor:
           ref: mirror_main_index_bottom
+
+      mh7:
+        $extends: footprints.m2_grounded
+        anchor:
+          ref: main_middle_bottom
+          shift: [-5, -cy/2 - 5]
+      mh7_left:
+        $extends: pcbs.mainpcb.footprints.mh7
+        anchor:
+          ref: mirror_main_middle_bottom
+      mh8:
+        $extends: footprints.m2_grounded
+        anchor:
+          ref: main_middle_bottom
+          shift: [-5 + 6*2 + 1, -cy/2 - 5 - 4.5*2 + 1]
+      mh8_left:
+        $extends: pcbs.mainpcb.footprints.mh8
+        anchor:
+          ref: mirror_main_middle_bottom
+
 
       scroll:
         $extends: footprints.scrollwheel

@@ -36,7 +36,7 @@ To update using ergogen:
 | 2   | PJ-320A Jack               |                                                                                               | https://www.aliexpress.com/item/2251832181971069.html     |     |
 | 36  | Kailh Choc Hotswap Sockets |                                                                                               | https://www.aliexpress.com/item/3256803389452947.html     |     |
 | 3   | M2 Standoffs               | Trying M2x7                                                                                   | https://www.aliexpress.com/item/2251832782516182.html     |     |
-| 3   | M2 Screws                  |                                                                                               |                                                           |     |
+| idk can't count   | M2 Screws                  |                                                                                               |                                                           |     |
 | 1   | FPC Cable                  | 0.5mm pitch, 12pin, same side (but probably should cut and strip yourself anyways)            | https://www.aliexpress.com/item/3256801417741263.html     |     |
 | 1   | FPC Connector              | 12P, 0.5mm pitch                                                                              | https://www.aliexpress.com/item/2261800162045502.html     |     |
 | 4   | MCU Sockets (optional)     | I like these ones - PH3.5, use them with regular headers                                      | https://www.aliexpress.com/item/2251832713321083.html     |     |
@@ -51,6 +51,8 @@ To update using ergogen:
 | 2  | 1/4in lock nut         | Untested                                                                                           | https://www.aliexpress.com/item/3256802483856268.html                                                          |     |
 | 2  | Camera swivel thingy        | Untested                                                                                           | https://www.aliexpress.com/item/3256803400603212.html                                                          |     |
 | 2  | Magnetic Base        | Untested                                                                                           | https://www.aliexpress.com/item/3256803496352836.html                                                          |     |
+| 2  | Palm LED Diffuser | Untested                                                                                           | [In repo](outlines/palm_led_diffuser_final.dxf)                                                          |     |
+| 2  | Palm LED Diffuser Spacer | Untested                                                                                           | [In repo](outlines/palm_led_diffuser_spacer.dxf)                                                          |     |
 | 36  | Diodes           |                                                                                               |      |     |
 | 1   | Case (optional)            |                                                                                               | https://www.aliexpress.com/item/3256803532895347.html     |     |
 
