@@ -364,7 +364,7 @@
     "last_paths": {
       "gencad": "",
       "idf": "",
-      "netlist": "",
+      "netlist": "../../../../",
       "specctra_dsn": "",
       "step": "../Models/left_thumb.step",
       "vrml": "mainpcb.wrl"

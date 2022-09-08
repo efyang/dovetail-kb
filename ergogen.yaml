@@ -326,10 +326,10 @@ outlines:
       - type: rectangle
         mirror: true
         corner: 0.5
-        size: [3, connector_length]
+        size: [4, connector_length]
         anchor:
           ref: main_far_bottom
-          shift: [-cy/2-0.5, -cy/2+2]
+          shift: [-cy/2-0, -cy/2+2]
           rotate: (180/pi) * atan2((-cx/2 - 2), -(cy/2 + cy+3.5) - -cy/4)
     cutout_with_holes:
       - type: outline
@@ -501,9 +501,18 @@ footprints:
       part: 'Library:TRRS-PJ-320A'
     nets:
       1: GND
-      2: GND
-      3: SERIAL
-      4: VCC
+      2: VCC
+      3: TRRS3
+      4: TRRS4
+  jumper:
+    type: library_part
+    params:
+      class: 'J'
+      name: 'Jumper'
+      part: 'kbd:Jumper'
+    nets:
+      1: undefined
+      2: undefined
   promicro:
     type: library_part
     params:
@@ -684,6 +693,47 @@ pcbs:
         $extends: pcbs.mainpcb.footprints.i2c_header
         anchor:
           ref: mirror_main_middle_top
+
+      trrs_serial_jumper:
+        $extends: footprints.jumper
+        anchor:
+          ref: main_middle_top
+          shift: [-33+12, 2]
+        nets:
+          1: SERIAL
+          2: TRRS3
+      trrs_sda_jumper:
+        $extends: footprints.jumper
+        anchor:
+          ref: main_middle_top
+          shift: [-33+12, 0]
+        nets:
+          1: SDA
+          2: TRRS4
+      trrs_scl_jumper:
+        $extends: footprints.jumper
+        anchor:
+          ref: main_middle_top
+          shift: [-33+12, -2]
+        nets:
+          1: SCL
+          2: TRRS3
+
+      trrs_serial_jumper_left:
+        $extends: pcbs.mainpcb.footprints.trrs_serial_jumper
+        anchor:
+          ref: mirror_main_middle_top
+          rotate: 180
+      trrs_sda_jumper_left:
+        $extends: pcbs.mainpcb.footprints.trrs_sda_jumper
+        anchor:
+          ref: mirror_main_middle_top
+          rotate: 180
+      trrs_scl_jumper_left:
+        $extends: pcbs.mainpcb.footprints.trrs_scl_jumper
+        anchor:
+          ref: mirror_main_middle_top
+          rotate: 180
 
       rgb_ug1:
         $extends: footprints.ws2812b
@@ -966,8 +1016,8 @@ pcbs:
         anchor:
           ref: main_far_bottom
           shift:
-            - -cy/2-0.5 + connector_length/2 * cos(conn_rot + pi/2) + 3/2 * cos(conn_rot)
-            - -cy/2+2 + connector_length/2 * sin(conn_rot + pi/2) + 3/2 * sin(conn_rot)
+            - -cy/2-0 + connector_length/2 * cos(conn_rot + pi/2) + 2.25 * cos(conn_rot)
+            - -cy/2+2 + connector_length/2 * sin(conn_rot + pi/2) + 2.25 * sin(conn_rot)
           rotate: (180/pi) * conn_rot
       male_conn_left:
         $extends: pcbs.mainpcb.footprints.male_conn
